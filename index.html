@@ -194,8 +194,33 @@
       ["Na escola, os alunos estudam várias matérias, como matemática, português, ciências e história, para se prepararem para o futuro.", "What subjects do students study at school?"],
       ["O livro que estou lendo conta a história de uma jovem que viaja por diversos países da Europa em busca de aventuras e autoconhecimento.", "What is the book about?"],
       ["A natureza ao redor da nossa casa é muito bonita. Temos uma grande árvore no jardim, flores coloridas e um pequeno lago.", "What can be found in the garden around the house?"],
-      ["A praia estava lotada de turistas no verão. Eles nadavam no mar, jogavam vôlei de praia e aproveitavam o calor do sol.", "What were the tourists doing at the beach?"]
+      ["A praia estava lotada de turistas no verão. Eles nadavam no mar, jogavam vôlei de praia e aproveitavam o calor do sol.", "What were the tourists doing at the beach?"],
+      ["O trem chegou à estação exatamente no horário previsto, e todos os passageiros desceram apressados para pegar os táxis.", "What happened when the train arrived at the station?"],
+      ["Lucas e Mariana adoram ir ao cinema nos finais de semana para assistir a filmes de aventura e ação.", "What do Lucas and Mariana love doing on weekends?"],
+      ["Ela decidiu fazer uma caminhada pelo parque para aproveitar o dia ensolarado e relaxar um pouco.", "Why did she decide to walk in the park?"],
+      ["A cidade estava cheia de turistas que vinham para ver as famosas atrações históricas e culturais.", "Why were there many tourists in the city?"],
+      ["João preparou um delicioso jantar para seus amigos e todos ficaram muito satisfeitos com a comida.", "What did João prepare for his friends?"],
     ];
+
+    const audioPairs = [
+      ["No fim de semana passado, nossa família fez um passeio de barco pelo rio para admirar a paisagem.", "What did the family do last weekend?"],
+      ["O gato de Maria estava dormindo em sua cama favorita enquanto ela estava lendo um livro.", "Where was Maria's cat while she was reading?"],
+      ["A festa de aniversário de Ana foi muito divertida. Ela convidou todos os seus amigos e houve música e dança.", "How was Ana's birthday party?"],
+      ["O céu estava limpo e sem nuvens, e as estrelas eram visíveis a olho nu durante a noite.", "What was the weather like at night?"],
+      ["Na biblioteca, as crianças estavam lendo livros sobre animais selvagens e aprendendo sobre suas habitats.", "What were the children reading about in the library?"],
+      ["A casa de campo estava localizada em um lugar tranquilo, longe do barulho da cidade.", "Where was the country house located?"],
+      ["O filme de aventura que assistimos no cinema foi emocionante e cheio de surpresas.", "What was the movie like?"],
+      ["Em sua viagem para o interior, ela visitou várias fazendas e aprendeu como o queijo é feito.", "What did she learn during her trip to the countryside?"],
+      ["O clima estava quente e abafado, por isso as pessoas estavam bebendo muita água e se refrescando à sombra.", "Why were people drinking a lot of water?"],
+      ["Ele gosta de tocar violão nas horas vagas e costuma praticar todos os dias à tarde.", "What does he do in his free time?"],
+      ["O time de futebol venceu o campeonato local depois de uma partida difícil e emocionante.", "What did the football team achieve?"],
+      ["Na fazenda, o avô de Lucas cultivava frutas e legumes orgânicos que vendia no mercado local.", "What did Lucas's grandfather grow on the farm?"],
+      ["Eles estavam em um piquenique no parque e trouxeram sanduíches, sucos e frutas para compartilhar.", "What did they bring to the picnic?"],
+      ["As crianças estavam aprendendo a nadar na piscina durante as férias de verão.", "What were the children learning to do during summer vacation?"],
+      ["Durante o acampamento, os jovens fizeram uma caminhada até o topo da montanha para apreciar a vista.", "What did the young people do during the camping trip?"],
+      ["O projeto de ciências da escola envolvia a construção de um foguete de papel que seria lançado ao ar.", "What was the science project about?"],
+      ["Ela preparou um café delicioso para seus amigos, que elogiaram muito o sabor.", "What did she make for her friends?"]
+    ]
 
     function shuffle(arr) {
       return arr.sort(() => Math.random() - 0.5);
@@ -240,7 +265,7 @@
       form.innerHTML += '</ol>';
 
       form.innerHTML += '<h2>Listening</h2><ol>';
-      shuffle(readingPairs).slice(0, 5).forEach(([sentence, question]) => {
+      shuffle(audioPairs).slice(0, 5).forEach(([sentence, question]) => {
         const sentenceId = 'sentence-' + Math.random().toString(36).substr(2, 9);
         const q = `Listen to the sentence and answer the question:<br><b>Question:</b> ${question}<br>`;
 
