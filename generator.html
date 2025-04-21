@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portuguese Homework Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+    }
+    h1, h2, h3 {
+      text-align: center;
+    }
+    ol {
+        list-style: none;
+      padding-left: 20px;
+    }
+    li {
+        list-style: none;
+      margin-bottom: 20px;
+    }
+    input[type='text'] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      font-size: 16px;
+    }
+    button {
+      display: block;
+      margin: 30px auto 0;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Portuguese Homework</h1>
+    <h3 id="date"></h3>
+    <form id="homeworkForm"></form>
+    <button id="downloadBtn">Download My Answers</button>
+  </div>
+
+  <script>
+    document.getElementById('date').textContent = `Date: ${new Date().toLocaleDateString()}`;
+
+    const commonWords = ["amor", "tempo", "vida", "dia", "homem", "mulher", "casa", "trabalho", "mundo", "família", "noite", "amigo", "coração", "cidade", "palavra", "olhos", "história", "água", "música", "viagem", "escola", "criança", "caminho", "porta", "janela", "luz", "paz", "força", "alegria", "tristeza", "felicidade", "esperança", "medo", "guerra", "vento", "chuva", "sol", "céu", "terra", "fogo", "silêncio", "você", "sorriso", "livro", "carro"];
+
+    const commonVerbs = ["ser", "estar", "ter", "fazer", "poder", "dizer", "ir", "ver", "dar", "saber", "querer", "chegar", "passar", "dever", "ficar", "deixar", "encontrar", "falar", "levar", "começar", "pensar", "andar", "voltar", "sentir", "trazer", "conhecer", "chamar", "viver", "olhar", "abrir", "escrever", "estudar", "comer", "beber", "dormir", "comprar", "vender", "ler", "correr", "brincar"];
+
+    const vocabTemplates = [
+      ["Translate to Portuguese: '{0}'", ["Good morning", "Thank you", "See you tomorrow", "Good night", "How are you?", "Goodbye"]],
+      ["What is the opposite of '{0}' in Portuguese?", ["big", "happy", "easy", "clean", "hot", "strong", "slow"]],
+      ["What is a synonym of '{0}' in Portuguese?", ["rápido", "feliz", "inteligente", "forte"]],
+      ["Fill in the blank in Portuguese: 'Eu gosto de ______ todos os dias.'", ["comer", "estudar", "correr", "dormir"]],
+      ["Use the Portuguese word '{0}' in a sentence.", shuffle(commonWords).slice(0, 10)],
+      ["What does '{0}' mean in English?", shuffle(commonWords).slice(0, 10)]
+    ];
+
+    const verbTemplates = [
+      ["What is the past tense of '{0}' for 'he/she' (ele/ela)?", "ele/ela"],
+      ["Conjugate the verb '{0}' in the future tense for 'we' (nós).", "nós"],
+      ["Conjugate '{0}' in the imperfect tense for 'we' (nós).", "nós"],
+      ["What is the conditional form of '{0}' for 'I' (eu)?", "eu"],
+      ["Form a sentence using '{0}' in present tense with 'ele/ela'.", "ele/ela"],
+      ["Conjugate the verb '{0}' in the present tense for 'they' (eles/elas).", "eles/elas"],
+      ["What is the future tense of '{0}' for 'he/she' (ele/ela)?", "ele/ela"],
+      ["Conjugate the verb '{0}' in past tense for 'we' (nós).", "nós"],
+      ["What is the imperfect tense of '{0}' for 'you' (você)?", "você"]
+    ];
+
+    const readingPairs = [
+      ["Maria vai ao mercado todos os dias para comprar frutas e legumes frescos para sua família.", "What does Maria buy at the market every day?"],
+      ["O sol estava brilhando e as crianças brincavam no parque enquanto os pais conversavam embaixo da árvore.", "What were the children doing at the park?"],
+      ["Pedro gosta de ler livros de aventura à noite, mas durante o dia ele prefere jogar futebol com os amigos.", "What does Pedro prefer to do during the day?"],
+      ["João e Ana foram ao cinema ontem para assistir a um filme que estava em cartaz há muito tempo. Eles gostaram muito.", "Where did João and Ana go yesterday?"],
+      ["Ela adora cozinhar bolos e tortas para os amigos e a família, e sempre tenta novas receitas para surpreender a todos.", "What does she love doing?"],
+      ["Durante o inverno, a cidade de Gramado fica coberta de neve, e muitas pessoas viajam de longe para ver esse espetáculo raro.", "What happens in Gramado during the winter?"],
+      ["Na escola, os alunos estudam várias matérias, como matemática, português, ciências e história, para se prepararem para o futuro.", "What subjects do students study at school?"],
+      ["O livro que estou lendo conta a história de uma jovem que viaja por diversos países da Europa em busca de aventuras e autoconhecimento.", "What is the book about?"],
+      ["A natureza ao redor da nossa casa é muito bonita. Temos uma grande árvore no jardim, flores coloridas e um pequeno lago.", "What can be found in the garden around the house?"],
+      ["A praia estava lotada de turistas no verão. Eles nadavam no mar, jogavam vôlei de praia e aproveitavam o calor do sol.", "What were the tourists doing at the beach?"]
+    ];
+
+    function shuffle(arr) {
+      return arr.sort(() => Math.random() - 0.5);
+    }
+
+    function generateHomework() {
+      const form = document.getElementById('homeworkForm');
+      form.innerHTML = '';
+      let count = 1;
+
+      form.innerHTML += '<h2>Vocabulary</h2><ol>';
+      let vocabQs = [];
+      vocabTemplates.forEach(([template, words]) => {
+        words.forEach(word => {
+          vocabQs.push(template.replace('{0}', word));
+        });
+      });
+      shuffle(vocabQs).slice(0, 5).forEach(q => {
+        form.innerHTML += `<li>${q}<br><input type='text' data-question="${q}"></li>`;
+      });
+      form.innerHTML += '</ol>';
+
+      form.innerHTML += '<h2>Verb Conjugation</h2><ol>';
+      shuffle(verbTemplates).slice(0, 5).forEach(([template]) => {
+        const verb = shuffle(commonVerbs)[0];
+        const q = template.replace('{0}', verb);
+        form.innerHTML += `<li>${q}<br><input type='text' data-question="${q}"></li>`;
+      });
+      form.innerHTML += '</ol>';
+
+      form.innerHTML += '<h2>Reading</h2><ol>';
+      shuffle(readingPairs).slice(0, 5).forEach(([sentence, question]) => {
+        const q = `Read the sentence and answer in Portuguese: '<i>${sentence}</i>'<br>Question: ${question}`;
+        form.innerHTML += `<li>${q}<br><input type='text' data-question="${q.replace(/<[^>]*>/g, '')}"></li>`;
+      });
+      form.innerHTML += '</ol>';
+    }
+
+    generateHomework();
+
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      let inputs = document.querySelectorAll('input');
+      let answers = '';
+      inputs.forEach((input, index) => {
+        answers += `Pergunta ${index + 1}: ${input.getAttribute('data-question')}
+Resposta: ${input.value}\n\n`;
+      });
+      let blob = new Blob([answers], { type: 'text/plain' });
+      let link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'respostas_da_licao.txt';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  </script>
+</body>
+</html>
