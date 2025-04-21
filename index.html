@@ -2,40 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Portuguese Homework Generator</title>
+  <title>Portuguese Quiz (BR)</title>
   <style>
+    /* General Styles */
     body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 0;
+      color: #333;
     }
+
     .container {
       max-width: 900px;
       margin: auto;
-      background: white;
+      background: #fff;
       padding: 40px;
-      border-radius: 8px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
     }
+
     h1, h2, h3 {
       text-align: center;
+      color: #0056b3;
     }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #333;
+    }
+
+    h3 {
+      font-size: 18px;
+      color: #888;
+    }
+
     ol {
-        list-style: none;
       padding-left: 20px;
+      margin-bottom: 30px;
     }
+
     li {
-        list-style: none;
+      list-style: none;
       margin-bottom: 20px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #444;
     }
+
     input[type='text'] {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 8px;
       font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      box-sizing: border-box;
+      transition: border 0.3s ease;
     }
+
+    input[type='text']:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
     button {
-      display: block;
-      margin: 30px auto 0;
       padding: 10px 20px;
       font-size: 16px;
       background: #007bff;
@@ -43,25 +81,86 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
     }
+
     button:hover {
       background-color: #0056b3;
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    .flex-btn-group {
+      display: flex;
+      justify-content: flex-start;
+      gap: 15px;
+      margin: 5px 0;
+    }
+
+    .flex-btn-group button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .flex-btn-group button:hover {
+      background-color: #218838;
+    }
+
+    .flex-btn-group button:focus {
+      outline: none;
+    }
+
+    .sentence {
+      margin-top: 10px;
+      font-style: italic;
+      color: #6c757d;
+    }
+
+    .form-section {
+      margin-bottom: 40px;
+    }
+
+    .download-btn {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 20px;
+      font-size: 18px;
+      background-color: #17a2b8;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      width: 100%;
+      max-width: 300px;
+      transition: background-color 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background-color: #138496;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Portuguese Homework</h1>
+    <h1>Portuguese Quiz (BR)</h1>
     <h3 id="date"></h3>
     <form id="homeworkForm"></form>
-    <button id="downloadBtn">Download My Answers</button>
+    <button id="downloadBtn" class="download-btn">Download My Answers</button>
   </div>
 
   <script>
     document.getElementById('date').textContent = `Date: ${new Date().toLocaleDateString()}`;
 
     const commonWords = ["amor", "tempo", "vida", "dia", "homem", "mulher", "casa", "trabalho", "mundo", "família", "noite", "amigo", "coração", "cidade", "palavra", "olhos", "história", "água", "música", "viagem", "escola", "criança", "caminho", "porta", "janela", "luz", "paz", "força", "alegria", "tristeza", "felicidade", "esperança", "medo", "guerra", "vento", "chuva", "sol", "céu", "terra", "fogo", "silêncio", "você", "sorriso", "livro", "carro"];
-
     const commonVerbs = ["ser", "estar", "ter", "fazer", "poder", "dizer", "ir", "ver", "dar", "saber", "querer", "chegar", "passar", "dever", "ficar", "deixar", "encontrar", "falar", "levar", "começar", "pensar", "andar", "voltar", "sentir", "trazer", "conhecer", "chamar", "viver", "olhar", "abrir", "escrever", "estudar", "comer", "beber", "dormir", "comprar", "vender", "ler", "correr", "brincar"];
 
     const vocabTemplates = [
@@ -102,7 +201,13 @@
       return arr.sort(() => Math.random() - 0.5);
     }
 
+    function toggleSentence(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    }
+
     function generateHomework() {
+      window.speechSynthesis.cancel();
       const form = document.getElementById('homeworkForm');
       form.innerHTML = '';
       let count = 1;
@@ -133,6 +238,30 @@
         form.innerHTML += `<li>${q}<br><input type='text' data-question="${q.replace(/<[^>]*>/g, '')}"></li>`;
       });
       form.innerHTML += '</ol>';
+
+      form.innerHTML += '<h2>Listening</h2><ol>';
+      shuffle(readingPairs).slice(0, 5).forEach(([sentence, question]) => {
+        const sentenceId = 'sentence-' + Math.random().toString(36).substr(2, 9);
+        const q = `Listen to the sentence and answer the question:<br><b>Question:</b> ${question}<br>`;
+
+        form.innerHTML += `
+          <li>
+            ${q}
+            <div class="flex-btn-group">
+              <button type="button" onclick="speakText('${sentence}')">Play Audio</button>
+              <button type="button" onclick="toggleSentence('${sentenceId}')">Show/Hide Sentence</button>
+            </div>
+            <div id="${sentenceId}" class="sentence" style="display:none;">${sentence}</div>
+            <input type="text" data-question="${question}">
+          </li>`;
+      });
+      form.innerHTML += '</ol>';
+    }
+
+    function speakText(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'pt-BR';  // Portuguese language code
+      window.speechSynthesis.speak(utterance);
     }
 
     generateHomework();
@@ -141,8 +270,7 @@
       let inputs = document.querySelectorAll('input');
       let answers = '';
       inputs.forEach((input, index) => {
-        answers += `Pergunta ${index + 1}: ${input.getAttribute('data-question')}
-Resposta: ${input.value}\n\n`;
+        answers += `Pergunta ${index + 1}: ${input.getAttribute('data-question')}\nResposta: ${input.value}\n\n`;
       });
       let blob = new Blob([answers], { type: 'text/plain' });
       let link = document.createElement('a');
