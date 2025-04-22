@@ -5,149 +5,234 @@
   <title>Portuguese Quiz</title>
   <link rel="icon" href="flag-br.png" type="image/png">
   <style>
-    /* General Styles */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f4f8;
-      margin: 0;
-      padding: 0;
-      color: #333;
-    }
+  /* General Styles */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
 
+  .container {
+    max-width: 900px;
+    margin: auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  h1, h2, h3 {
+    text-align: center;
+    color: #0056b3;
+  }
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 28px;
+    color: #333;
+  }
+
+  h3 {
+    font-size: 18px;
+    color: #888;
+  }
+
+  ol {
+    padding-left: 20px;
+    margin-bottom: 30px;
+  }
+
+  li {
+    list-style: none;
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  input[type='text'] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    transition: border 0.3s ease;
+  }
+
+  input[type='text']:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  button:focus {
+    outline: none;
+  }
+
+  .flex-btn-group {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    margin: 5px 0;
+  }
+
+  .flex-btn-group button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .flex-btn-group button:hover {
+    background-color: #218838;
+  }
+
+  .flex-btn-group button:focus {
+    outline: none;
+  }
+
+  .sentence {
+    margin-top: 10px;
+    font-style: italic;
+    color: #6c757d;
+  }
+
+  .form-section {
+    margin-bottom: 40px;
+  }
+
+  .download-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 20px;
+    font-size: 18px;
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+    transition: background-color 0.3s ease;
+  }
+
+  .download-btn:hover {
+    background-color: #138496;
+  }
+
+  /* Media Queries for Mobile Responsiveness */
+  @media (max-width: 768px) {
     .container {
-      max-width: 900px;
-      margin: auto;
-      background: #fff;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      margin-top: 30px;
-    }
-
-    h1, h2, h3 {
-      text-align: center;
-      color: #0056b3;
+      padding: 20px;
+      margin-top: 20px;
     }
 
     h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
+      font-size: 30px;
     }
 
     h2 {
-      font-size: 28px;
-      color: #333;
+      font-size: 24px;
     }
 
     h3 {
-      font-size: 18px;
-      color: #888;
-    }
-
-    ol {
-      padding-left: 20px;
-      margin-bottom: 30px;
+      font-size: 16px;
     }
 
     li {
-      list-style: none;
-      margin-bottom: 20px;
-      font-size: 16px;
-      line-height: 1.5;
-      color: #444;
-    }
-
-    input[type='text'] {
-      width: 100%;
-      padding: 12px;
-      margin-top: 8px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-      box-sizing: border-box;
-      transition: border 0.3s ease;
-    }
-
-    input[type='text']:focus {
-      outline: none;
-      border-color: #007bff;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    button:focus {
-      outline: none;
-    }
-
-    .flex-btn-group {
-      display: flex;
-      justify-content: flex-start;
-      gap: 15px;
-      margin: 5px 0;
-    }
-
-    .flex-btn-group button {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #28a745;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
       font-size: 14px;
     }
 
-    .flex-btn-group button:hover {
-      background-color: #218838;
+    input[type='text'] {
+      font-size: 14px;
     }
-
-    .flex-btn-group button:focus {
-      outline: none;
-    }
-
-    .sentence {
-      margin-top: 10px;
-      font-style: italic;
-      color: #6c757d;
-    }
-
-    .form-section {
-      margin-bottom: 40px;
+  
+    button, .flex-btn-group button {
+      font-size: 14px;
+      padding: 8px 15px;
+      width: 100%; /* Make buttons take full width on small screens */
     }
 
     .download-btn {
-      display: block;
-      margin: 20px auto;
-      padding: 12px 20px;
-      font-size: 18px;
-      background-color: #17a2b8;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      text-align: center;
-      cursor: pointer;
-      width: 100%;
-      max-width: 300px;
-      transition: background-color 0.3s ease;
+      font-size: 16px;
     }
 
-    .download-btn:hover {
-      background-color: #138496;
+    .flex-btn-group {
+      flex-wrap: wrap; /* Allow buttons to wrap in small screens */
+      gap: 10px;
     }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 28px;
+    }
+
+    h2 {
+      font-size: 22px;
+    }
+
+    h3 {
+      font-size: 14px;
+    }
+
+    input[type='text'] {
+      font-size: 14px;
+    }
+
+    li {
+      font-size: 12px;
+    }
+
+    .container {
+      padding: 15px;
+    }
+
+    .download-btn {
+      font-size: 14px;
+    }
+
+    button, .flex-btn-group button {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+
+    .flex-btn-group {
+      flex-direction: column;
+    }
+  }
   </style>
 </head>
 <body>
